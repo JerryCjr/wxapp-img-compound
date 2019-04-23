@@ -1,0 +1,5 @@
+.vscode/
+/dist/
+/miniprogram_dist/
+/miniprogram_npm/
+npm-shrinkwrap.json

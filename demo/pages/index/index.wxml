@@ -1,0 +1,11 @@
+<view class="container">
+  <canvas
+    class="o-canvas"
+    canvas-id="ocanvas"
+    style="width: 100vw; height: 90vh;"
+  >
+  </canvas>
+  <view>
+    <button size="mini" bindtap="create">生成</button>
+  </view>
+</view>
