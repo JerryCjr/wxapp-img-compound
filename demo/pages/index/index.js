@@ -46,14 +46,7 @@ Page({
       y: 300,
       width: 200,
       height: 200,
-      text: 'http://ppbd7ianm.bkt.clouddn.com/tom_01.jpeg',
-      image: {
-        imageResource: 'http://ppbd7ianm.bkt.clouddn.com/tom_01.jpeg',
-        dx: 20 + 70,
-        dy: 300 + 70,
-        dWidth: 60,
-        dHeight: 60
-      }
+      text: 'http://ppbd7ianm.bkt.clouddn.com/tom_01.jpeg'
     },
     {
       type: UTYPE['TEXT'],

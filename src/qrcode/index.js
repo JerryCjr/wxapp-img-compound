@@ -1,4 +1,3 @@
-import extend from 'extend';
 import {
   QRCode,
   QRErrorCorrectLevel
@@ -25,27 +24,21 @@ function utf16to8(str) {
   return out;
 }
 
-function drawQrcode(options) {
-  options = options || {};
-  options = extend(true, {
-    width: 256,
-    height: 256,
-    x: 0,
-    y: 0,
-    typeNumber: -1,
-    correctLevel: QRErrorCorrectLevel.H,
-    background: '#ffffff',
-    foreground: '#000000',
-    image: {
-      imageResource: '',
-      dx: 0,
-      dy: 0,
-      dWidth: 100,
-      dHeight: 100
-    }
-  }, options);
-
-  if (!options.canvasId && !options.ctx) {
+function drawQrcode({
+  _this = null,
+  canvasId,
+  ctx = null,
+  text,
+  width = 256,
+  height = 256,
+  x = 0,
+  y = 0,
+  typeNumber = -1,
+  correctLevel = QRErrorCorrectLevel.H,
+  background = '#ffffff',
+  foreground = '#000000'
+} = {}) {
+  if (!canvasId && !ctx) {
     console.warn('please set canvasId or ctx!');
     return;
   }
@@ -54,40 +47,29 @@ function drawQrcode(options) {
 
   function createCanvas() {
     // create the qrcode itself
-    var qrcode = new QRCode(options.typeNumber, options.correctLevel);
-    qrcode.addData(utf16to8(options.text));
+    var qrcode = new QRCode(typeNumber, correctLevel);
+    qrcode.addData(utf16to8(text));
     qrcode.make();
 
     // get canvas context
-    var ctx;
-    if (options.ctx) {
-      ctx = options.ctx;
-    } else {
-      ctx = options._this ? wx.createCanvasContext && wx.createCanvasContext(options.canvasId, options._this) : wx.createCanvasContext && wx.createCanvasContext(options.canvasId);
+    if (!ctx) {
+      ctx = _this ? wx.createCanvasContext && wx.createCanvasContext(canvasId, _this) : wx.createCanvasContext && wx.createCanvasContext(canvasId);
     }
 
     // compute tileW/tileH based on options.width/options.height
-    var tileW = options.width / qrcode.getModuleCount();
-    var tileH = options.height / qrcode.getModuleCount();
+    var tileW = width / qrcode.getModuleCount();
+    var tileH = height / qrcode.getModuleCount();
 
     // draw in the canvas
     for (var row = 0; row < qrcode.getModuleCount(); row++) {
       for (var col = 0; col < qrcode.getModuleCount(); col++) {
-        var style = qrcode.isDark(row, col) ? options.foreground : options.background;
+        var style = qrcode.isDark(row, col) ? foreground : background;
         ctx.setFillStyle(style);
         var w = (Math.ceil((col + 1) * tileW) - Math.floor(col * tileW));
         var h = (Math.ceil((row + 1) * tileW) - Math.floor(row * tileW));
-        ctx.fillRect(Math.round(col * tileW) + options.x, Math.round(row * tileH) + options.y, w, h);
+        ctx.fillRect(Math.round(col * tileW) + x, Math.round(row * tileH) + y, w, h);
       }
     }
-
-    if (options.image.imageResource) {
-      ctx.drawImage(options.image.imageResource, options.image.dx, options.image.dy, options.image.dWidth, options.image.dHeight);
-    }
-
-    ctx.draw(false, function (e) {
-      options.callback && options.callback(e);
-    });
   }
 }
 
