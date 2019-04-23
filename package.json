@@ -28,8 +28,7 @@
   },
   "dependencies": {
     "babyfs-wxapp-api": "^1.1.3",
-    "babyfs-wxapp-runningtime": "^1.1.1",
-    "extend": "^3.0.2"
+    "babyfs-wxapp-runningtime": "^1.1.1"
   },
   "repository": {
     "type": "git",

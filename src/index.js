@@ -13,11 +13,20 @@ const UTYPE = {
 };
 
 // 合成图片
-const _drawImg = async function ({ content, x, y, width, height, drawSuccessCallback = null }) {
+const _drawImg = async function ({
+  content,
+  x,
+  y,
+  width,
+  height,
+  drawSuccessCallback = null
+}) {
   if (!content) return;
   let r;
   try {
-    r = await wapi.getImageInfoAsync({ src: content });
+    r = await wapi.getImageInfoAsync({
+      src: content
+    });
   } catch (error) {
     throw new Error(error);
   }
@@ -47,7 +56,8 @@ const _drawText = async function ({
   textAlign = 'left',
   textBaseline = 'normal',
   maxWidth = 0,
-  maxLength = 0 }) {
+  maxLength = 0
+}) {
   if (!content) return;
 
   if (maxLength && String(content).length > maxLength) {
@@ -78,7 +88,14 @@ const _drawQrcode = async function ({
 }) {
   const callback = null;
   qrcodeCreate({
-    text, x, y, width, height, ctx: this, image, callback
+    text,
+    x,
+    y,
+    width,
+    height,
+    ctx: this,
+    image,
+    callback
   });
 };
 
@@ -94,7 +111,7 @@ const _draw = async function () {
           // width: 300,
           // height: 400,
           destWidth: 375,
-          destHeight: 400,
+          destHeight: 667,
           canvasId: 'ocanvas'
         });
       } catch (error) {

@@ -1,5 +1,5 @@
 {
-  "name": "babyfs-wxapp-img-compound",
+  "name": "wxapp-img-compound",
   "version": "0.1.0",
   "lockfileVersion": 1,
   "requires": true,
@@ -2241,7 +2241,8 @@
     "extend": {
       "version": "3.0.2",
       "resolved": "http://npm.babyfs.cn/extend/-/extend-3.0.2.tgz",
-      "integrity": "sha512-fjquC59cD7CyW6urNXK0FBufkZcoiGG80wTuPujX590cB5Ttln20E2UB4S/WARVqhXffZl2LNgS+gQdPIIim/g=="
+      "integrity": "sha512-fjquC59cD7CyW6urNXK0FBufkZcoiGG80wTuPujX590cB5Ttln20E2UB4S/WARVqhXffZl2LNgS+gQdPIIim/g==",
+      "dev": true
     },
     "extend-shallow": {
       "version": "3.0.2",
