@@ -43,11 +43,12 @@ function drawQrcode({
     return;
   }
 
-  createCanvas();
+  _draw();
 
-  function createCanvas() {
+  // this draw is not canvas's draw()
+  function _draw() {
     // create the qrcode itself
-    var qrcode = new QRCode(typeNumber, correctLevel);
+    let qrcode = new QRCode(typeNumber, correctLevel);
     qrcode.addData(utf16to8(text));
     qrcode.make();
 
@@ -57,16 +58,16 @@ function drawQrcode({
     }
 
     // compute tileW/tileH based on options.width/options.height
-    var tileW = width / qrcode.getModuleCount();
-    var tileH = height / qrcode.getModuleCount();
+    let tileW = width / qrcode.getModuleCount();
+    let tileH = height / qrcode.getModuleCount();
 
     // draw in the canvas
-    for (var row = 0; row < qrcode.getModuleCount(); row++) {
-      for (var col = 0; col < qrcode.getModuleCount(); col++) {
-        var style = qrcode.isDark(row, col) ? foreground : background;
+    for (let row = 0; row < qrcode.getModuleCount(); row++) {
+      for (let col = 0; col < qrcode.getModuleCount(); col++) {
+        let style = qrcode.isDark(row, col) ? foreground : background;
         ctx.setFillStyle(style);
-        var w = (Math.ceil((col + 1) * tileW) - Math.floor(col * tileW));
-        var h = (Math.ceil((row + 1) * tileW) - Math.floor(row * tileW));
+        let w = (Math.ceil((col + 1) * tileW) - Math.floor(col * tileW));
+        let h = (Math.ceil((row + 1) * tileW) - Math.floor(row * tileW));
         ctx.fillRect(Math.round(col * tileW) + x, Math.round(row * tileH) + y, w, h);
       }
     }
