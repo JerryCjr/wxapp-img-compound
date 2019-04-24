@@ -6,6 +6,6 @@
   >
   </canvas>
   <view>
-    <button size="mini" bindtap="create">生成</button>
+    <button size="mini" bindtap="store">保存都本地相册</button>
   </view>
 </view>

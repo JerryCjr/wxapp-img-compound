@@ -1111,9 +1111,17 @@
       "dev": true
     },
     "babyfs-wxapp-api": {
-      "version": "1.1.3",
-      "resolved": "http://npm.babyfs.cn/babyfs-wxapp-api/-/babyfs-wxapp-api-1.1.3.tgz",
-      "integrity": "sha512-JAxKSzJaN8BPkj+m6p9s/OrgfbPRKO9T7XgpiW14LE7sxP3VBdJlo5A6dgB+NE6tCSD3VUMsYCjUXay0SbdOFg==",
+      "version": "2.0.0",
+      "resolved": "http://npm.babyfs.cn/babyfs-wxapp-api/-/babyfs-wxapp-api-2.0.0.tgz",
+      "integrity": "sha512-lpTLsIcbopi4TO4IpGYtw18ROUdwwZxa43T0YiTVS2SZNlxv0+baDMAH0BmHu58IaUM2oaMU1f/aPYkFHafiEQ==",
+      "requires": {
+        "babyfs-wxapp-runningtime": "^1.1.1"
+      }
+    },
+    "babyfs-wxapp-qrcode": {
+      "version": "0.1.0",
+      "resolved": "http://npm.babyfs.cn/babyfs-wxapp-qrcode/-/babyfs-wxapp-qrcode-0.1.0.tgz",
+      "integrity": "sha512-COWzD2gmavKDnXiZi0g9z4oM0uJ9KAhRBRfhQjoAozKRxR0hN5d8CGLwAK5YACWL55BdrE7cRBLz37pdw1BkIQ==",
       "requires": {
         "babyfs-wxapp-runningtime": "^1.1.1"
       }
