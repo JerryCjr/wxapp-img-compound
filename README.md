@@ -133,10 +133,7 @@ Page({
       destWidth: 375,
       destHeight: 667,
       fileType: 'jpg',
-      quality: 90,
-      drawSuccessCallback: () => {
-        console.log('canvas draw success');
-      }
+      quality: 0.9
     };
     let r;
     try {
@@ -236,8 +233,7 @@ Page({
 
 #### config [Object]
 
-* [canvasToTempFilePath的参数](https://developers.weixin.qq.com/miniprogram/dev/api/wx.canvasToTempFilePath.html)
-* drawSuccessCallback 可以在绘制成功的回调中执行
+与[wx.canvasToTempFilePath参数](https://developers.weixin.qq.com/miniprogram/dev/api/wx.canvasToTempFilePath.html)保持一致
 
 #### return [Object]
 

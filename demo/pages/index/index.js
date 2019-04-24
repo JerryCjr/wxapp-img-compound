@@ -85,10 +85,7 @@ Page({
       destWidth: 375,
       destHeight: 667,
       fileType: 'jpg',
-      quality: 90,
-      drawSuccessCallback: () => {
-        console.log('canvas draw success');
-      }
+      quality: 0.9
     };
     let r;
     try {

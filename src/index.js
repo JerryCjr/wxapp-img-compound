@@ -98,7 +98,6 @@ const _draw = async function (canvasId = '', argv = {}) {
           ...argv,
           canvasId
         });
-        argv && argv.drawSuccessCallback && argv.drawSuccessCallback();
       } catch (error) {
         console.log(error);
         reject(error);
