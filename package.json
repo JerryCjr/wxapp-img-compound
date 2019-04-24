@@ -27,7 +27,8 @@
     "path": "^0.12.7"
   },
   "dependencies": {
-    "babyfs-wxapp-api": "^1.1.3",
+    "babyfs-wxapp-api": "^2.0.0",
+    "babyfs-wxapp-qrcode": "^0.1.0",
     "babyfs-wxapp-runningtime": "^1.1.1"
   },
   "repository": {

@@ -1,8 +1,13 @@
+import wapi from 'babyfs-wxapp-api';
 import {
   UTYPE,
   compound
 } from '../../miniprogram_dist/index.js';
+
 Page({
+  data: {
+    path: ''
+  },
   async onReady() {
     const options = [{
       type: UTYPE['IMG'],
@@ -11,7 +16,7 @@ Page({
       y: 0,
       width: 375,
       height: 667,
-      content: 'http://ppbd7ianm.bkt.clouddn.com/post_02.jpg'
+      path: 'http://ppbd7ianm.bkt.clouddn.com/post_02.jpg'
     },
     {
       // type: UTYPE['IMG'],
@@ -20,13 +25,13 @@ Page({
       y: 0,
       width: 50,
       height: 50,
-      content: 'http://ppbd7ianm.bkt.clouddn.com/tom_01.jpeg'
+      path: 'http://ppbd7ianm.bkt.clouddn.com/tom_01.jpeg'
     },
     {
       type: UTYPE['TEXT'],
       x: 0,
       y: 100,
-      content: 'http://ppbd7ianm.bkt.clouddn.com/tom_01.jpeg',
+      text: 'http://ppbd7ianm.bkt.clouddn.com/tom_01.jpeg',
       color: 'red',
       textAlign: 'left',
       maxLength: 16
@@ -35,7 +40,7 @@ Page({
       type: UTYPE['TEXT'],
       x: 0,
       y: 150,
-      content: 'hello world',
+      text: 'hello world',
       color: 'red',
       textAlign: 'left',
       maxLength: 16
@@ -69,7 +74,7 @@ Page({
       type: UTYPE['TEXT'],
       x: 0,
       y: 200,
-      content: '你好宝宝',
+      text: '你好宝宝',
       color: 'red',
       textAlign: 'left',
       maxLength: 16
@@ -85,7 +90,32 @@ Page({
         console.log('canvas draw success');
       }
     };
-    let r = await compound('ocanvas', options, config);
-    console.log(r);
+    let r;
+    try {
+      r = await compound('ocanvas', options, config);
+    } catch (error) {
+      console.log(error);
+    }
+    if (r.errMsg === 'canvasToTempFilePath:ok') {
+      this.setData({
+        path: r.tempFilePath
+      });
+    }
+  },
+
+  async store() {
+    const path = this.data.path;
+    let r;
+    if (path) {
+      console.log('store');
+      try {
+        r = await wapi.saveImageToPhotosAlbumAsync({ filePath: path });
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    if (r) {
+      console.log(r);
+    }
   }
 });

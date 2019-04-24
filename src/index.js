@@ -1,5 +1,5 @@
-import wapi from './wapi.js';
-import qrcodeCreate from './qrcode/index.js';
+import wapi from 'babyfs-wxapp-api';
+import qrcodeCreate from 'babyfs-wxapp-qrcode';
 
 const IMG = Symbol('IMG');
 const TEXT = Symbol('TEXT');
@@ -14,17 +14,17 @@ const UTYPE = {
 
 // 合成图片
 const _drawImg = async function ({
-  content,
-  x,
-  y,
-  width,
-  height
+  path,
+  x = 0,
+  y = 0,
+  width = 256,
+  height = 256
 }) {
-  if (!content) return;
+  if (!path) return;
   let r;
   try {
     r = await wapi.getImageInfoAsync({
-      src: content
+      src: path
     });
   } catch (error) {
     throw new Error(error);
@@ -36,32 +36,32 @@ const _drawImg = async function ({
 
 /**
  * @function 生成文字
- * @param {string} argv.content 在画布上输出的文本
- * @param {number} argv.x 绘制文本的左上角 x 坐标位置
- * @param {number} argv.y 绘制文本的左上角 y 坐标位置
+ * @param {string} argv.text 在画布上输出的文本
+ * @param {number} argv.x 文字的左上角在目标canvas上x轴的位置
+ * @param {number} argv.y 文字的左上角在目标canvas上y轴的位置
  * @param {string} argv.color 绘制的颜色 默认黑色, 可选
  * @param {number} argv.fontSize 绘制的字体大小 默认14 可选
  * @param {string} argv.textAlign 绘制的文字的对齐方式 默认left 合法值为: left center right 可选
- * @param {string} argv.textBaseline 绘制的文字的竖直对齐方式 normal 合法值为: top bottom middle normal
- * @param {string} argv.maxWidth 需要绘制的最大宽度，默认0及不做限制 可选
- * @param {string} argv.maxLength 需要绘制的最大长度，默认0 及不做限制 可选
+ * @param {string} argv.textBaseline 绘制的文字的竖直对齐方式 默认normal 合法值为: top bottom middle normal
+ * @param {number} argv.maxWidth 需要绘制的最大宽度，-1会隐藏 可选
+ * @param {number} argv.maxLength 需要绘制的最大长度， 可选
  */
 const _drawText = async function ({
-  content,
+  text,
   x,
   y,
   color = 'black',
   fontSize = 24,
   textAlign = 'left',
   textBaseline = 'normal',
-  maxWidth = 0,
-  maxLength = 0
+  maxWidth,
+  maxLength
 }) {
-  if (!content) return;
+  if (!text) return;
 
-  if (maxLength && String(content).length > maxLength) {
+  if (Number(maxLength) && String(text).length > Number(maxLength)) {
     console.log('最大长度限制溢出截断');
-    content = content.slice(0, maxLength);
+    text = text.slice(0, Number(maxLength));
   }
 
   this.setFontSize(Number(fontSize));
@@ -69,10 +69,10 @@ const _drawText = async function ({
   this.setTextAlign(textAlign);
   this.setTextAlign(textBaseline);
 
-  if (maxWidth) {
-    this.fillText(String(content), x, y, maxWidth);
+  if (Number(maxWidth)) {
+    this.fillText(String(text), x, y, Number(maxWidth));
   } else {
-    this.fillText(String(content), x, y, null);
+    this.fillText(String(text), x, y, null);
   }
 };
 
