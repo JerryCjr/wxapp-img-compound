@@ -18,8 +18,7 @@ const _drawImg = async function ({
   x,
   y,
   width,
-  height,
-  drawSuccessCallback = null
+  height
 }) {
   if (!content) return;
   let r;
@@ -78,42 +77,28 @@ const _drawText = async function ({
 };
 
 // 合成二维码
-const _drawQrcode = async function ({
-  text,
-  x,
-  y,
-  width,
-  height,
-  image
-}) {
-  const callback = null;
+const _drawQrcode = function (argv) {
   qrcodeCreate({
-    text,
-    x,
-    y,
-    width,
-    height,
-    ctx: this,
-    image,
-    callback
+    ...argv,
+    ctx: this
   });
 };
 
-// canvas draw
-const _draw = async function () {
+/**
+ * @function 绘制 canvas.draw() 支持传入回调
+ * @param {*} canvasId canvasid
+ * @param {*} argv canvasToTempFilePath: https://developers.weixin.qq.com/miniprogram/dev/api/wx.canvasToTempFilePath.html
+ */
+const _draw = async function (canvasId = '', argv = {}) {
   return new Promise((resolve, reject) => {
     this.draw(true, async () => {
       let r;
       try {
         r = await wapi.canvasToTempFilePathAsync({
-          // x: 0,
-          // y: 0,
-          // width: 300,
-          // height: 400,
-          destWidth: 375,
-          destHeight: 667,
-          canvasId: 'ocanvas'
+          ...argv,
+          canvasId
         });
+        argv && argv.drawSuccessCallback && argv.drawSuccessCallback();
       } catch (error) {
         console.log(error);
         reject(error);
@@ -129,30 +114,27 @@ const _draw = async function () {
  * @function 自定义合成
  * @param {string} canvasId canvasId
  * @param {array} options 合成选项配置 元素的先后顺序决定了层级顺序
+ * @param {Object} config 绘制成功的配置信息
  */
-const compound = async function (canvasId, options) {
+const compound = async function (canvasId, options, config) {
   if (!canvasId) return;
   const ctx = wapi.createCanvasContext(canvasId);
   for (let index = 0; index < options.length; index++) {
-    console.log(['index', index]);
     const element = options[index];
     switch (element.type) {
       case UTYPE['TEXT']:
-        console.log('文字合成');
         await _drawText.call(ctx, element);
         break;
       case UTYPE['QRCODE']:
-        console.log('二维码合成');
-        await _drawQrcode.call(ctx, element);
+        _drawQrcode.call(ctx, element);
         break;
       default:
-        console.log('图片合成');
         await _drawImg.call(ctx, element);
         break;
     }
   }
-  let r = await _draw.call(ctx, canvasId);
-  console.log(r);
+  let r = await _draw.call(ctx, canvasId, config);
+  return Promise.resolve(r);
 };
 
 export {

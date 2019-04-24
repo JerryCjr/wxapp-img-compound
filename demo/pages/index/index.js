@@ -3,7 +3,7 @@ import {
   compound
 } from '../../miniprogram_dist/index.js';
 Page({
-  onReady() {
+  async onReady() {
     const options = [{
       type: UTYPE['IMG'],
       // type: UTYPE['TEXT'],
@@ -40,13 +40,30 @@ Page({
       textAlign: 'left',
       maxLength: 16
     },
+    // {
+    //   type: UTYPE['QRCODE'],
+    //   x: 20,
+    //   y: 300,
+    //   width: 200,
+    //   height: 200,
+    //   text: 'http://ppbd7ianm.bkt.clouddn.com/tom_01.jpeg'
+    // },
+    // {
+    //   type: UTYPE['QRCODE'],
+    //   x: 20,
+    //   y: 300,
+    //   width: 200,
+    //   height: 200,
+    //   text: 'hello world'
+    // },
     {
       type: UTYPE['QRCODE'],
       x: 20,
       y: 300,
       width: 200,
       height: 200,
-      text: 'http://ppbd7ianm.bkt.clouddn.com/tom_01.jpeg'
+      text: '宝宝玩英语'
+      // background: '#098fe1'
     },
     {
       type: UTYPE['TEXT'],
@@ -57,6 +74,18 @@ Page({
       textAlign: 'left',
       maxLength: 16
     }];
-    compound('ocanvas', options);
+    const config = {
+      // x: 0,
+      // y: 0,
+      destWidth: 375,
+      destHeight: 667,
+      fileType: 'jpg',
+      quality: 90,
+      drawSuccessCallback: () => {
+        console.log('canvas draw success');
+      }
+    };
+    let r = await compound('ocanvas', options, config);
+    console.log(r);
   }
 });
