@@ -4,8 +4,10 @@
 
 .o-canvas {
   box-sizing: border-box;
-  width: 100vw;
-  height: 100vh;
-  padding: 1px;
-  border: 1px dashed red;
+  margin: 10vh auto;
+}
+
+.func {
+  display: flex;
+  justify-content: space-around;
 }

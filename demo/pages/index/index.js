@@ -8,98 +8,74 @@ Page({
   data: {
     path: ''
   },
+  customData: {
+    options: [],
+    config: null
+  },
   async onReady() {
-    const options = [{
+    this.customData.options = [{
       type: UTYPE['IMG'],
-      // type: UTYPE['TEXT'],
       x: 0,
       y: 0,
-      width: 375,
-      height: 667,
+      width: 220,
+      height: 389,
       path: 'http://ppbd7ianm.bkt.clouddn.com/post_02.jpg'
     },
     {
-      // type: UTYPE['IMG'],
       type: UTYPE['IMG'],
       x: 0,
       y: 0,
-      width: 50,
-      height: 50,
-      path: 'http://ppbd7ianm.bkt.clouddn.com/tom_01.jpeg'
+      width: 220,
+      height: 389,
+      path: 'http://ppbd7ianm.bkt.clouddn.com/%E9%95%82%E7%A9%BA%E5%A4%A7.png'
     },
-    {
-      type: UTYPE['TEXT'],
-      x: 0,
-      y: 100,
-      text: 'http://ppbd7ianm.bkt.clouddn.com/tom_01.jpeg',
-      color: 'red',
-      textAlign: 'left',
-      maxLength: 16
-    },
-    {
-      type: UTYPE['TEXT'],
-      x: 0,
-      y: 150,
-      text: 'hello world',
-      color: 'red',
-      textAlign: 'left',
-      maxLength: 16
-    },
-    // {
-    //   type: UTYPE['QRCODE'],
-    //   x: 20,
-    //   y: 300,
-    //   width: 200,
-    //   height: 200,
-    //   text: 'http://ppbd7ianm.bkt.clouddn.com/tom_01.jpeg'
-    // },
-    // {
-    //   type: UTYPE['QRCODE'],
-    //   x: 20,
-    //   y: 300,
-    //   width: 200,
-    //   height: 200,
-    //   text: 'hello world'
-    // },
     {
       type: UTYPE['QRCODE'],
-      x: 20,
-      y: 300,
-      width: 200,
-      height: 200,
+      x: 40,
+      y: 328,
+      width: 40,
+      height: 40,
       text: '宝宝玩英语'
+      // text: 'http://ppbd7ianm.bkt.clouddn.com/tom_01.jpeg'
       // background: '#098fe1'
     },
     {
       type: UTYPE['TEXT'],
-      x: 0,
-      y: 200,
+      x: 130,
+      y: 70,
       text: '你好宝宝',
-      color: 'red',
+      color: 'black',
       textAlign: 'left',
+      fontSize: 20,
       maxLength: 16
     }];
-    const config = {
+    this.customData.config = {
+      reserve: true,
       // x: 0,
       // y: 0,
-      destWidth: 375,
-      destHeight: 667,
+      destWidth: 220,
+      destHeight: 389,
       fileType: 'jpg',
-      quality: 0.9
+      quality: 1
     };
-    let r;
+  },
+
+  // 绘制
+  async draw() {
+    let response;
     try {
-      r = await compound('ocanvas', options, config);
+      response = await compound('ocanvas', this.customData.options, this.customData.config);
     } catch (error) {
       console.log(error);
     }
-    if (r.errMsg === 'canvasToTempFilePath:ok') {
+    if (response.errMsg === 'canvasToTempFilePath:ok') {
       this.setData({
-        path: r.tempFilePath
+        path: response.tempFilePath
       });
     }
   },
 
+  // 保存到本地
   async store() {
     const path = this.data.path;
     let r;
@@ -113,6 +89,28 @@ Page({
     }
     if (r) {
       console.log(r);
+    }
+  },
+
+  // 从本地相册选择
+  async choose() {
+    let r;
+    try {
+      r = await wapi.chooseImageAsync({
+        count: 1
+      });
+    } catch (error) {
+      console.log(error);
+    }
+    if (r && r.tempFilePaths) {
+      this.customData.options[0] = {
+        type: UTYPE['IMG'],
+        x: 0,
+        y: 0,
+        width: 220,
+        height: 389,
+        path: r.tempFilePaths[0]
+      };
     }
   }
 });

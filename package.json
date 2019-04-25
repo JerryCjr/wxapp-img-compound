@@ -1,6 +1,6 @@
 {
   "name": "wxapp-img-compound",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "img compound library for wxapp",
   "main": "miniprogram_dist/index.js",
   "scripts": {

@@ -233,8 +233,26 @@ Page({
 
 #### config [Object]
 
-与[wx.canvasToTempFilePath参数](https://developers.weixin.qq.com/miniprogram/dev/api/wx.canvasToTempFilePath.html)保持一致
+* 与[wx.canvasToTempFilePath参数](https://developers.weixin.qq.com/miniprogram/dev/api/wx.canvasToTempFilePath.html)保持一致
+* v0.1.1 新增参数 reserve
+
+| name       | type    | required | default             | description                                                                   | version limit |
+| ---------- | ------- | -------- | ------------------- | ----------------------------------------------------------------------------- | ------------- |
+| reserve    | boolean | no       | false               | 本次绘制是否接着上一次绘制                                                    | 1.2.0         |
+| x          | number  | no       | 0                   | 指定的画布区域的左上角横坐标                                                  | 1.2.0         |
+| y          | number  | no       | 0                   | 指定的画布区域的左上角纵坐标                                                  | 1.2.0         |
+| width      | number  | no       | canvas宽度-x        | 指定的画布区域的宽度                                                          | 1.2.0         |
+| height     | number  | no       | canvas宽度-x        | 指定的画布区域的高度                                                          | 1.2.0         |
+| destWidth  | number  | no       | width*屏幕像素密度  | 输出的图片的宽度                                                              | 1.2.0         |
+| destHeight | number  | no       | height*屏幕像素密度 | 输出的图片的高度                                                              | 1.2.0         |
+| fileType   | string  | no       | 'png'               | 目标文件的类型                                                                | 1.7.0         |
+| quality    | number  | yes      | no default          | 图片的质量，目前仅对 jpg 有效。取值范围为 (0, 1]，不在范围内时当作 1.0 处理。 | 1.7.0         |
+
 
 #### return [Object]
 
-其实是canvasToTempFilePath成功回调返回的值
+success 回调函数
+
+| name         | type   | description        |
+| ------------ | ------ | ------------------ |
+| tempFilePath | string | 生成文件的临时路径 |

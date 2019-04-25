@@ -2,10 +2,12 @@
   <canvas
     class="o-canvas"
     canvas-id="ocanvas"
-    style="width: 100vw; height: 90vh;"
+    style="width: 220px; height: 389px;"
   >
   </canvas>
-  <view>
-    <button size="mini" bindtap="store">保存都本地相册</button>
+  <view class="func">
+    <button bindtap="choose">choose</button>
+    <button bindtap="draw">draw</button>
+    <button bindtap="store">store</button>
   </view>
 </view>

@@ -12,6 +12,18 @@ const UTYPE = {
   QRCODE
 };
 
+/**
+ * @description 获取canvas上下文
+ * @param {String} canvasId required
+ * @returns canvas ctx
+ */
+function getInstance(canvasId) {
+  if (!canvasId) {
+    throw new Error('canvasid is required');
+  }
+  return wapi.createCanvasContext(canvasId);
+};
+
 // 合成图片
 const _drawImg = async function ({
   path,
@@ -91,7 +103,7 @@ const _drawQrcode = function (argv) {
  */
 const _draw = async function (canvasId = '', argv = {}) {
   return new Promise((resolve, reject) => {
-    this.draw(true, async () => {
+    this.draw(Boolean(argv['reserve']), async () => {
       let r;
       try {
         r = await wapi.canvasToTempFilePathAsync({
@@ -116,8 +128,7 @@ const _draw = async function (canvasId = '', argv = {}) {
  * @param {Object} config 绘制成功的配置信息
  */
 const compound = async function (canvasId, options, config) {
-  if (!canvasId) return;
-  const ctx = wapi.createCanvasContext(canvasId);
+  const ctx = getInstance(canvasId);
   for (let index = 0; index < options.length; index++) {
     const element = options[index];
     switch (element.type) {
